@@ -113,6 +113,32 @@ Node *MinKey(Node *root){
     }
 }
 
+Node *MaxKey(Node *root){
+    Node *current;
+    if (root == nullptr){
+        return nullptr;
+    }
+    current = root;
+    while (current->right != nullptr){
+        current = current->right;
+    }
+    return current;
+}
+
+Node *FindConsequentKey(Node *node, int k){
+    Node *current = node;
+    Node *parent;
+    
+    if (current->right != nullptr){
+        return MinKey(current->right);
+    }
+    parent = current->parent;
+    while (parent != nullptr && current == parent->right){
+        current = parent;
+        parent = parent->parent
+    }
+    return parent;
+}
 
 int main() {
     int n, k;
