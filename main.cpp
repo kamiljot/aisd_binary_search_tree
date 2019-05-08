@@ -135,7 +135,7 @@ Node *FindConsequentKey(Node *node, int k){
     parent = current->parent;
     while (parent != nullptr && current == parent->right){
         current = parent;
-        parent = parent->parent
+        parent = parent->parent;
     }
     return parent;
 }
