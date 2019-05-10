@@ -44,7 +44,7 @@ void AddNode(Node *&root, int k){
     node->parent = parent;
 }
 
-void DeleteNode(Node *root, Node node){
+void DeleteNode(Node *&root, Node *node){
     Node *removable;
     Node *child;
     
