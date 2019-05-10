@@ -44,6 +44,43 @@ void AddNode(Node *&root, int k){
     node->parent = parent;
 }
 
+void DeleteNode(Node *root, Node node){
+    Node *removable;
+    Node *child;
+    
+    if (node->left == nullptr || node->right == nullptr){
+        removable = node;
+    }
+    else{
+        removable = FindConsequentKey(node);
+    }
+    if (removable->left != nullptr) {
+        child = removable->left;
+    }
+    else{
+        child = removable->right;
+    }
+    if (child != nullptr){
+        child->parent = removable->parent;
+    }
+    if (removable->parent == nullptr){
+        root = child;
+    }
+    else{
+        if (removable == removable->parent->left){
+            removable->parent->left = child;
+        }
+        else{
+            removable->parent->right = child;
+        }
+    }
+    if (removable != node){
+        node->key = removable->key;
+    }
+    
+    delete removable;
+}
+     
 void InorderPrint(Node *root){
     if (root != nullptr){
         InorderPrint(root->left);
@@ -125,7 +162,7 @@ Node *MaxKey(Node *root){
     return current;
 }
 
-Node *FindConsequentKey(Node *node, int k){
+Node *FindConsequentKey(Node *node){
     Node *current = node;
     Node *parent;
     
