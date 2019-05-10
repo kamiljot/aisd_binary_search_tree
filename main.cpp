@@ -44,6 +44,30 @@ void AddNode(Node *&root, int k){
     node->parent = parent;
 }
 
+Node *MinKey(Node *root){
+    if (root == nullptr || root->left == nullptr){
+        return root;
+    } else{
+        return MinKey(root->left);
+    }
+}
+
+Node *FindConsequentKey(Node *node){
+    Node *current = node;
+    Node *parent;
+
+    if (current->right != nullptr){
+        return MinKey(current->right);
+    }
+    parent = current->parent;
+    while (parent != nullptr && current == parent->right){
+        current = parent;
+        parent = parent->parent;
+    }
+    return parent;
+}
+
+
 void DeleteNode(Node *&root, Node *node){
     Node *removable;
     Node *child;
@@ -142,14 +166,6 @@ void DeleteTree(Node *node){
     }
 }
 
-Node *MinKey(Node *root){
-    if (root == nullptr || root->left == nullptr){
-        return root;
-    } else{
-        return MinKey(root->left);
-    }
-}
-
 Node *MaxKey(Node *root){
     Node *current;
     if (root == nullptr){
@@ -160,21 +176,6 @@ Node *MaxKey(Node *root){
         current = current->right;
     }
     return current;
-}
-
-Node *FindConsequentKey(Node *node){
-    Node *current = node;
-    Node *parent;
-    
-    if (current->right != nullptr){
-        return MinKey(current->right);
-    }
-    parent = current->parent;
-    while (parent != nullptr && current == parent->right){
-        current = parent;
-        parent = parent->parent;
-    }
-    return parent;
 }
 
 int main() {
