@@ -8,7 +8,7 @@ struct Node{
     Node *right;
 };
 
-void AddNode(Node *&root, int k){
+void AddNode(Node *&root, int k){    //   a
     Node *parent;
     Node *node;
 
@@ -68,7 +68,7 @@ Node *FindConsequentKey(Node *node){
 }
 
 
-void DeleteNode(Node *&root, Node *node){
+void DeleteNode(Node *&root, Node *node){   //   d
     Node *removable;
     Node *child;
     
@@ -158,11 +158,11 @@ Node *FindKey(Node *root, int k){
     }
 }
 
-void DeleteTree(Node *node){
-    if (node != nullptr) {
-        DeleteTree(node->left);
-        DeleteTree(node->right);
-        delete node;
+void DeleteTree(Node *&root){   //   r
+    if (root != nullptr) {
+        DeleteTree(root->left);
+        DeleteTree(root->right);
+        delete root;
     }
 }
 
@@ -177,23 +177,68 @@ Node *MaxKey(Node *root){
     }
     return current;
 }
+void Default(){
+    cout << "Press:" << endl;
+    cout << "> 'a x' to add node with x value" << endl;
+    cout << "> 'd x' to delete node with x value" << endl;
+    cout << "> 'r' to remove the tree" << endl;
+    cout << "> 'm' to find maximum value" << endl;
+    cout << "> 'n' to find minimum value" << endl;
+    cout << "> 'f x' to find consequent of x" << endl;
+    cout << "> 'h' to print height of the tree" << endl;
+    cout << "> 'i' to inorder print the tree" << endl;
+    cout << "> 'p' to preorder print the tree" << endl;
+    cout << "> 'o' to postorder print the tree" << endl;
+}
 
 int main() {
     int n, k;
-    cin >> n;
+    char p;
     Node *root = nullptr;
 
-    for (int i = 0; i < n; i++){
-        cin >> k;
-        AddNode(root, k);
+    Default();
+
+    while(cin >> p){
+        switch (p){
+            case 'q':
+                DeleteTree(root);
+                return 0;
+            case 'a':
+                cin >> k;
+                AddNode(root, k);
+                break;
+            case 'd':
+                cin >> k;
+                DeleteNode(root, FindKey(root, k));
+                break;
+            case 'r':
+                DeleteTree(root);
+                break;
+            case 'm':
+                cout << MaxKey(root)->key << endl;
+                break;
+            case 'n':
+                cout << MinKey(root)->key << endl;
+                break;
+            case 'f':
+                cin >> k;
+                cout << FindConsequentKey(FindKey(root, k))->key << endl;
+                break;
+            case 'h':
+                cout << TreeHeight(root) << endl;
+                break;
+            case 'i':
+                InorderPrint(root);
+                break;
+            case 'p':
+                PreorderPrint(root);
+                break;
+            case 'o':
+                PostorderPrint(root);
+                break;
+            default:
+                Default();
+                break;
+        }
     }
-
-    InorderPrint(root);
-    PreorderPrint(root);
-    PostorderPrint(root);
-
-    cout << TreeHeight(root);
-    cout << " " << MinKey(root)->key;
-    DeleteTree(root);
-    return 0;
 }
