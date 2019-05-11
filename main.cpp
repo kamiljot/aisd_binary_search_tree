@@ -192,7 +192,7 @@ void Default(){
 }
 
 int main() {
-    int n, k;
+    int k;
     char p;
     Node *root = nullptr;
 
