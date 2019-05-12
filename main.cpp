@@ -162,7 +162,10 @@ void DeleteTree(Node *&root){   //   r
     if (root != nullptr) {
         DeleteTree(root->left);
         DeleteTree(root->right);
-        delete root;
+        root->left = nullptr;
+        root->right = nullptr;
+        root->parent = nullptr;
+        delete *&root;
     }
 }
 
@@ -195,8 +198,8 @@ int main() {
     int k;
     char p;
     Node *root = nullptr;
-
     Default();
+
 
     while(cin >> p){
         switch (p){
@@ -213,6 +216,7 @@ int main() {
                 break;
             case 'r':
                 DeleteTree(root);
+                root = nullptr;
                 break;
             case 'm':
                 cout << MaxKey(root)->key << endl;
